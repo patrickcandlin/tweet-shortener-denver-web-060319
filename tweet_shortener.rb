@@ -16,11 +16,7 @@ dictionary
 end
 def word_substituter(tweet)
     tweet.split(" ").map do |x|
-        if d.include?(x.downcase)
-            d[x.downcase]
-        else
-            x
-        end
+        d.include?(x.downcase) ? d[x.downcase] : x
     end.join(" ")
 end
 
@@ -31,5 +27,9 @@ def bulk_tweet_shortener(tweets)
 end
 
 def selective_tweet_shortener(tweets)
-    put tweets
+    tweets.length > 140 ? word_substituter(tweets) : tweets
+end
+
+def shortened_tweet_truncator(tweet)
+    selective_tweet_shortener(tweet).length > 140 ? selective_tweet_shortener(tweet)[0..139] : selective_tweet_shortener(tweet)
 end
